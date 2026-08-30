@@ -1,0 +1,20 @@
+{
+  "name": "re8ch-cloud-tenant",
+  "interface": {
+    "displayName": "Re8ch Cloud Tenant"
+  },
+  "plugins": [
+    {
+      "name": "re8ch-qwen-tenant-expert",
+      "source": {
+        "source": "local",
+        "path": "./plugins/re8ch-qwen-tenant-expert"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

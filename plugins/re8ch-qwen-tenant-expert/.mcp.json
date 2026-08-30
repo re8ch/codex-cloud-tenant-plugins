@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "re8ch-qwen-tenant": {
+      "type": "http",
+      "url": "https://tools.re8ch.com/tenant/mcp",
+      "oauth": {"clientId": "re8ch-qwen-tenant"},
+      "scopes": ["openid", "profile", "email", "offline_access"]
+    }
+  }
+}

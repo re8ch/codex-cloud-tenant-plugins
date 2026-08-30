@@ -1,0 +1,24 @@
+{
+  "name": "re8ch-qwen-tenant-expert",
+  "version": "0.1.0+codex.20260830084223",
+  "description": "Qwen tenant access to RE8CH container image and database runtime services.",
+  "author": {
+    "name": "RE8CH",
+    "url": "https://github.com/re8ch"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Qwen Tenant Expert",
+    "shortDescription": "Run OCI images and tenant databases on RE8CH capacity.",
+    "longDescription": "A tenant-scoped expert for pulling digest-pinned OCI images, running ordinary container workloads, provisioning database instances, and observing or releasing only Qwen-owned resources through audited RE8CH tools.",
+    "developerName": "RE8CH",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": [
+      "Show the compute and database capacity available to the Qwen tenant.",
+      "Plan this container image run and show quota, placement, cost, and expiry before creating it.",
+      "Provision a tenant database and return only the approved connection reference."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}
