@@ -1,0 +1,19 @@
+{
+  "name": "re8ch-tenant-byoc",
+  "version": "0.1.0",
+  "description": "Tenant-safe BYOC enrollment and AmongClusters consumption.",
+  "author": {
+    "name": "RE8CH", "url": "https://github.com/re8ch"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Tenant BYOC",
+    "shortDescription": "Enroll and use your own cluster.",
+    "longDescription": "Registers an outbound-only cluster identity, observes approval and connection state, and consumes tenant-authorized AmongClusters service links without uploading kubeconfig data.",
+    "developerName": "RE8CH",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": ["Register my cluster for BYOC enrollment.", "Show my cluster connection state.", "Revoke my BYOC connection."]
+  },
+  "mcpServers": "./.mcp.json"
+}
