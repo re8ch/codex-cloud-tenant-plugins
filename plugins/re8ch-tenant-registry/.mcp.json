@@ -1,3 +1,3 @@
 {
-  "mcpServers": {"re8ch-tenant-registry": {"type": "http", "url": "https://tools.re8ch.com/tenant/mcp", "oauth": {"clientId": "re8ch-tenant-infrastructure"}, "scopes": ["openid", "profile", "email", "groups", "offline_access"]}}
+  "mcpServers": {"re8ch-tenant-registry": {"type": "http", "url": "https://tools.re8ch.com/tenant/registry/mcp", "oauth": {"clientId": "re8ch-tenant-registry"}, "scopes": ["openid", "profile", "email", "groups", "offline_access"]}}
 }
