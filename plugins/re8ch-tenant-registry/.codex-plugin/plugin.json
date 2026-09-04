@@ -1,0 +1,17 @@
+{
+  "name": "re8ch-tenant-registry",
+  "version": "0.1.0",
+  "description": "Tenant-safe Harbor repository, artifact and image authorization workflows.",
+  "author": {"name": "RE8CH", "url": "https://github.com/re8ch"},
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Tenant Registry",
+    "shortDescription": "Manage tenant images through Harbor isolation.",
+    "longDescription": "Plans registry Consumables, grants project-scoped pull or push access, and manages tenant-owned images using opaque access references.",
+    "developerName": "RE8CH",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": ["Plan a private registry project for my tenant.", "Grant build-push access with a finite lifetime.", "Show my registry usage without pricing."]
+  },
+  "mcpServers": "./.mcp.json"
+}

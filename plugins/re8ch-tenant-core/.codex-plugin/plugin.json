@@ -1,0 +1,17 @@
+{
+  "name": "re8ch-tenant-core",
+  "version": "0.1.0",
+  "description": "Generic tenant lifecycle and Consumable authorization for RE8CH Cloud.",
+  "author": {"name": "RE8CH", "url": "https://github.com/re8ch"},
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Tenant Core",
+    "shortDescription": "Manage tenants and app-neutral Consumable grants.",
+    "longDescription": "Creates named tenants, grants Consumables, changes visibility and deletes tenants through one audited authorization proxy without exposing app-native credentials.",
+    "developerName": "RE8CH",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": ["Show my tenant and available Consumables.", "Create a tenant and explain its default visibility.", "Grant a Consumable without returning credentials."]
+  },
+  "mcpServers": "./.mcp.json"
+}

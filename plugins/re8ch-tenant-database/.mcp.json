@@ -1,0 +1,3 @@
+{
+  "mcpServers": {"re8ch-tenant-database": {"type": "http", "url": "https://tools.re8ch.com/tenant/mcp", "oauth": {"clientId": "re8ch-tenant-infrastructure"}, "scopes": ["openid", "profile", "email", "groups", "offline_access"]}}
+}
