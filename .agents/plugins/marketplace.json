@@ -15,6 +15,54 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "re8ch-tenant-core",
+      "source": {
+        "source": "local",
+        "path": "./plugins/re8ch-tenant-core"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "re8ch-tenant-registry",
+      "source": {
+        "source": "local",
+        "path": "./plugins/re8ch-tenant-registry"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "re8ch-tenant-database",
+      "source": {
+        "source": "local",
+        "path": "./plugins/re8ch-tenant-database"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "re8ch-tenant-observability",
+      "source": {
+        "source": "local",
+        "path": "./plugins/re8ch-tenant-observability"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ]
 }

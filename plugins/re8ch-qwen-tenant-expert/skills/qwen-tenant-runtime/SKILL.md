@@ -5,8 +5,10 @@ description: Run digest-pinned OCI images and tenant database instances using Qw
 
 # Qwen Tenant Runtime
 
-Use only the `re8ch-qwen-tenant` MCP server. The authenticated identity fixes
-the tenant to `qwen`; never accept another tenant id from a prompt.
+This is a compatibility package. Use only the `re8ch-qwen-tenant` MCP server.
+The authenticated identity fixes the tenant to `qwen`; never accept another
+tenant id from a prompt. Prefer the generic service lifecycle and opaque
+`accessRef` operations exposed by the tenant proxy.
 
 1. Call capability discovery before a new workload or database request.
 2. Plan first and show requested CPU, memory, storage, placement class, quota,
@@ -22,7 +24,9 @@ the tenant to `qwen`; never accept another tenant id from a prompt.
 6. Qwen owns its PublicEdge configuration and `ynzs.com` publication. A RE8CH
    workload may return an origin/service reference; do not mutate DNS, choose
    PublicEdge candidates, or claim domain authority.
-7. Do not call generic kubectl, SSH, containerd, Cilium, Ceph, Pigsty, or node
+7. Registry, database and observability rights are separate Consumable grants;
+   this package must not infer one grant from another.
+8. Do not call generic kubectl, SSH, containerd, Cilium, Ceph, Pigsty, or node
    tools. Use tenant operations so quota, isolation, audit, and cleanup apply.
-8. For status, logs, artifacts, stop, or release, operate only on references
+9. For status, logs, artifacts, stop, or release, operate only on references
    returned for the authenticated Qwen tenant.

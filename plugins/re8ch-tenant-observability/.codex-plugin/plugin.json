@@ -1,0 +1,17 @@
+{
+  "name": "re8ch-tenant-observability",
+  "version": "0.1.0",
+  "description": "Tenant Grafana, metrics and logs visibility through unified Consumable grants.",
+  "author": {"name": "RE8CH", "url": "https://github.com/re8ch"},
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Tenant Observability",
+    "shortDescription": "Grant scoped dashboards and datasource visibility.",
+    "longDescription": "Maps tenant permissions to Grafana organizations, folders and datasources while retaining shared Victoria data planes and hiding native authorization details.",
+    "developerName": "RE8CH",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": ["Plan viewer access to my metrics and logs.", "Grant access to these Grafana folders and datasources.", "Show observability usage and missing meters."]
+  },
+  "mcpServers": "./.mcp.json"
+}

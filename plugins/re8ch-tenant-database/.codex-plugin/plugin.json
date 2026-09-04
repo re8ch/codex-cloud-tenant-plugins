@@ -1,0 +1,17 @@
+{
+  "name": "re8ch-tenant-database",
+  "version": "0.1.0",
+  "description": "Tenant-isolated PostgreSQL service lifecycle through RE8CH Consumables.",
+  "author": {"name": "RE8CH", "url": "https://github.com/re8ch"},
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Re8ch Tenant Database",
+    "shortDescription": "Provision tenant PostgreSQL without exposing secrets.",
+    "longDescription": "Plans, provisions, updates and retires tenant database instances with explicit capacity, backup and retention contracts and opaque connection access.",
+    "developerName": "RE8CH",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Write", "OAuth", "MCP"],
+    "defaultPrompt": ["Plan a PostgreSQL instance with backup retention.", "Provision the planned database for my tenant.", "Show database usage and current lifecycle state."]
+  },
+  "mcpServers": "./.mcp.json"
+}
