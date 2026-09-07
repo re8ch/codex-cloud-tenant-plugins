@@ -1,3 +1,0 @@
-{
-  "mcpServers": {"re8ch-tenant-observability": {"type": "http", "url": "https://tools.re8ch.com/tenant/observability/mcp", "oauth": {"clientId": "re8ch-tenant-observability"}, "scopes": ["openid", "profile", "email", "groups", "offline_access"]}}
-}
