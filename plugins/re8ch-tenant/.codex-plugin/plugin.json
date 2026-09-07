@@ -1,6 +1,6 @@
 {
   "name": "re8ch-tenant",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generic self-service access to RE8CH tenant capabilities through one identity-scoped control plane.",
   "author": {
     "name": "RE8CH",
