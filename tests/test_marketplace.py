@@ -4,67 +4,72 @@ from pathlib import Path
 
 ROOT = Path(__file__).parents[1]
 MARKETPLACE = ROOT / ".agents/plugins/marketplace.json"
-GENERIC = {
-    "re8ch-tenant-registry": "tenant-registry",
-    "re8ch-tenant-observability": "tenant-observability",
-    "re8ch-tenant-byoc": "tenant-byoc",
-}
-ENDPOINTS = {
-    "re8ch-tenant-registry": ("registry", "re8ch-tenant-registry"),
-    "re8ch-tenant-observability": ("observability", "re8ch-tenant-observability"),
-    "re8ch-tenant-byoc": ("byoc", "re8ch-tenant-byoc"),
-}
+PLUGIN = ROOT / "plugins/re8ch-tenant"
 
 
 def read_json(path: Path):
     return json.loads(path.read_text())
 
 
-def test_marketplace_contains_separate_tenant_purposes():
+def test_marketplace_exposes_exactly_one_generic_tenant_plugin():
     marketplace = read_json(MARKETPLACE)
     assert marketplace["name"] == "re8ch-cloud-tenant"
-    names = [entry["name"] for entry in marketplace["plugins"]]
-    assert len(names) == len(set(names))
-    assert set(GENERIC) <= set(names)
-    policies = {entry["name"]: entry["policy"] for entry in marketplace["plugins"]}
-    assert policies["re8ch-tenant-core"]["installation"] == "NOT_AVAILABLE"
-    assert policies["re8ch-tenant-database"]["installation"] == "NOT_AVAILABLE"
-    assert all(policies[name] == {"installation": "AVAILABLE", "authentication": "ON_INSTALL"} for name in GENERIC)
+    assert marketplace["plugins"] == [
+        {
+            "name": "re8ch-tenant",
+            "source": {"source": "local", "path": "./plugins/re8ch-tenant"},
+            "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+            "category": "Developer Tools",
+        }
+    ]
 
 
-def test_generic_plugins_share_proxy_but_have_distinct_skill_contracts():
-    skill_texts = {}
-    for plugin_name, skill_name in GENERIC.items():
-        plugin = ROOT / "plugins" / plugin_name
-        manifest = read_json(plugin / ".codex-plugin/plugin.json")
-        mcp = read_json(plugin / ".mcp.json")
-        server = next(iter(mcp["mcpServers"].values()))
-        assert manifest["name"] == plugin_name
-        endpoint, client = ENDPOINTS[plugin_name]
-        assert server["url"] == f"https://tools.re8ch.com/tenant/{endpoint}/mcp"
-        assert server["oauth"]["clientId"] == client
-        assert "groups" in server["scopes"]
-        skill_texts[plugin_name] = (plugin / "skills" / skill_name / "SKILL.md").read_text()
-    assert "registry.harbor.v1" in skill_texts["re8ch-tenant-registry"]
-    assert "observability.grafana.v1" in skill_texts["re8ch-tenant-observability"]
-    assert "kubeconfig" in skill_texts["re8ch-tenant-byoc"]
+def test_tenant_plugin_uses_the_single_identity_scoped_endpoint():
+    manifest = read_json(PLUGIN / ".codex-plugin/plugin.json")
+    mcp = read_json(PLUGIN / ".mcp.json")
+    assert manifest["name"] == "re8ch-tenant"
+    assert manifest["interface"]["displayName"] == "Re8ch Tenant"
+    assert mcp == {
+        "mcpServers": {
+            "re8ch-tenant": {
+                "type": "http",
+                "url": "https://tools.re8ch.com/tenant/mcp",
+                "oauth": {"clientId": "re8ch-tenant"},
+                "scopes": ["openid", "profile", "email", "groups", "offline_access"],
+            }
+        }
+    }
 
 
-def test_plugins_never_embed_credential_material():
-    forbidden = ('"password"', '"token"', '"secret"', '"apiKey"', '"clientSecret"')
-    for path in (ROOT / "plugins").rglob("*"):
+def test_domain_capabilities_are_skills_not_marketplace_plugins():
+    skills = {path.parent.name for path in (PLUGIN / "skills").glob("*/SKILL.md")}
+    assert skills == {
+        "tenant-self-service",
+        "tenant-registry",
+        "tenant-database",
+        "tenant-observability",
+        "tenant-byoc",
+    }
+    plugin_dirs = {
+        path.parent.parent.name for path in ROOT.glob("plugins/*/.codex-plugin/plugin.json")
+    }
+    assert plugin_dirs == {"re8ch-tenant"}
+
+
+def test_shared_marketplace_contains_no_tenant_specific_identity():
+    content = "\n".join(
+        path.read_text()
+        for root in (ROOT / "plugins", ROOT / ".agents", ROOT / "README.md")
+        for path in ([root] if root.is_file() else root.rglob("*"))
+        if path.is_file()
+    ).lower()
+    assert "qwen" not in content
+    assert "artchais" not in content
+
+
+def test_plugin_never_embeds_credential_material():
+    forbidden = ('"password"', '"token"', '"secret"', '"apikey"', '"clientsecret"')
+    for path in PLUGIN.rglob("*"):
         if path.is_file():
-            text = path.read_text()
+            text = path.read_text().lower()
             assert not any(value in text for value in forbidden), path
-
-
-def test_artchais_plugin_uses_dedicated_oauth_publication():
-    plugin = ROOT / "plugins/re8ch-artchais-tenant"
-    manifest = read_json(plugin / ".codex-plugin/plugin.json")
-    server = read_json(plugin / ".mcp.json")["mcpServers"]["re8ch-artchais-tenant"]
-    assert manifest["name"] == "re8ch-artchais-tenant"
-    assert server["url"] == "https://tools.re8ch.com/tenant/artchais/mcp"
-    assert server["oauth"]["clientId"] == "re8ch-artchais-tenant"
-    skill = (plugin / "skills/artchais-tenant/SKILL.md").read_text()
-    assert "never accept a prompted tenant" in skill
-    assert "artc_kubernetes_admin" in skill
