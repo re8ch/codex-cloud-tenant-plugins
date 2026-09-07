@@ -17,6 +17,7 @@ authorization layer maps the stable OIDC subject to one tenant and its quota.
 - Database: `re8ch-tenant-database`
 - Observability: `re8ch-tenant-observability`
 - Compatibility package: `re8ch-qwen-tenant-expert`
+- Artchais cluster access: `re8ch-artchais-tenant`
 - MCP resource: `https://tools.re8ch.com/tenant/mcp`
 - OIDC issuer: `https://dex.re8ch.com`
 
@@ -28,3 +29,8 @@ Authentication maps the OIDC identity to `admin` or an arbitrary named tenant;
 a prompt must never choose or override that mapping. The proxy translates
 Consumable grants into application-native authorization and returns only opaque
 access references.
+
+The Artchais package uses `https://tools.re8ch.com/tenant/artchais/mcp` and the
+public PKCE client `re8ch-artchais-tenant`. Dex maps the `Artchais` organization
+teams `tenant-admins`, `tenant-operators` and `tenant-viewers` to server-side
+tenant roles. The package contains no AmongClusters credential or kubeconfig.

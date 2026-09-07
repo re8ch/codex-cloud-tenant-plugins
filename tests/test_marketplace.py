@@ -56,3 +56,15 @@ def test_plugins_never_embed_credential_material():
         if path.is_file():
             text = path.read_text()
             assert not any(value in text for value in forbidden), path
+
+
+def test_artchais_plugin_uses_dedicated_oauth_publication():
+    plugin = ROOT / "plugins/re8ch-artchais-tenant"
+    manifest = read_json(plugin / ".codex-plugin/plugin.json")
+    server = read_json(plugin / ".mcp.json")["mcpServers"]["re8ch-artchais-tenant"]
+    assert manifest["name"] == "re8ch-artchais-tenant"
+    assert server["url"] == "https://tools.re8ch.com/tenant/artchais/mcp"
+    assert server["oauth"]["clientId"] == "re8ch-artchais-tenant"
+    skill = (plugin / "skills/artchais-tenant/SKILL.md").read_text()
+    assert "never accept a prompted tenant" in skill
+    assert "artc_kubernetes_admin" in skill
